@@ -9,7 +9,9 @@
 // getting a random phrase
 // checking for a win
 // removing life from the scoreboard
-
+/**
+ * Game class to
+ */
 class Game {
 	constructor() {
 		this.missed = 0;
@@ -23,7 +25,9 @@ class Game {
 		this.activePhrase = null;
 		this.alphabet = 'abcdefghijklmnopqrstuvwxyz';
 	}
-
+	/**
+	 * method to start a new game
+	 */
 	startGame() {
 		// hide the overlay which will also prevent the start button from being used
 		overlay.style.display = 'none';
@@ -32,7 +36,9 @@ class Game {
 		// show the phrase with letters hidden
 		this.activePhrase.addPhraseToDisplay();
 	}
-
+	/**
+	 * method to get a random phrase from the phrases property
+	 */
 	getRandomPhrase() {
 		// retrieve random phrase from phrases array
 		const randomNum = Math.floor(Math.random() * this.phrases.length);
@@ -42,10 +48,13 @@ class Game {
 		this.usedPhrases++;
 		return randomPhrase;
 	}
-
+	/**
+	 * method to handle the game logic
+	 * @param {(click|mousedown)} event user input
+	 */
 	handleInteraction(event) {
-		let guessedLetter;
-		let cls;
+		let guessedLetter; 	// will hold letter user guessed
+		let cls;						// will hold css class to style used letters
 		
 		// capture letter user selected
 		if (event.type === 'click') {
@@ -62,6 +71,7 @@ class Game {
 			this.activePhrase.showMatchedLetter(guessedLetter);
 			// indicate on onscreen keyboard the correct letter was chosen
 			cls = 'chosen';
+			// call gameOver method if all the letters were found
 			if (this.checkForWin()) this.gameOver('win');
 		} else {
 			cls = 'wrong';
@@ -80,7 +90,10 @@ class Game {
 			}
 		}
 	}
-
+	/**
+	 * method to keep track of and display wrong guesses
+	 * and call the gameOver method if the player lost
+	 */
 	removeLife() {
 		// change onscreen heart to lost
 		const heart = document.getElementsByTagName('img')[this.missed];
@@ -92,11 +105,16 @@ class Game {
 			this.gameOver('lose')
 		}
 	}
-
+	/**
+	 * method to check if the player has won
+	 */
 	checkForWin() {
 		return document.getElementsByClassName('hide').length === 0;
 	}
-
+	/**
+	 * method to show the outcome of the game
+	 * @param {string} outcome 
+	 */
 	gameOver(outcome) {
 		// set win or lose class and game over message depending on outcome
 		let cls;
@@ -109,7 +127,8 @@ class Game {
 			message = 'Boo hoo!! You lose :('
 		}
 		overlay.classList = cls;
-		// set game over message
+
+		// add game over message to overlay
 		document.getElementById('game-over-message').innerText = message;
 		// show the win/lose overlay
 		overlay.style.display = '';
