@@ -62,7 +62,7 @@ class Game {
 			guessedLetter = event.target.textContent;
 		} else if (event.type === 'keyup') {
 			// check if letter wasn't already guessed, bail if it was
-			if (!this.alphabet.includes(guessedLetter)) return;
+			if (!this.alphabet.includes(event.key)) return;
 			guessedLetter = event.key;
 		}
 
@@ -79,17 +79,16 @@ class Game {
 			this.removeLife();
 		}
 
-		// find button element corresponding to letter
+		// find button element corresponding to letter and style and disable it
 		for (const btn of document.querySelectorAll('.key')) {
 			if (btn.textContent.includes(guessedLetter)) {
-				// change button style
 				btn.classList.add(cls);
-				// disable guessed button
 				btn.disabled = true;
-				// remove letter from alphabet of available letters
-				this.alphabet = this.alphabet.replace(guessedLetter, '');
 			}
 		}
+		
+		// remove letter from alphabet of available letters
+		this.alphabet = this.alphabet.replace(guessedLetter, '');
 	}
 	/**
 	 * method to keep track of and display wrong guesses
