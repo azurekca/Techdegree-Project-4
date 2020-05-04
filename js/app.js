@@ -8,6 +8,9 @@ const onscreenKeyboard = document.getElementById('qwerty');
 const phraseUL = document.querySelector('#phrase ul');
 let game = null;
 
+/**
+ * Prepare the DOM for a new game
+ */
 function resetBoard() {
 	// remove all li's from the phrase ul
 	phraseUL.innerHTML = '';
