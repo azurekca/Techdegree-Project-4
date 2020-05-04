@@ -2,18 +2,25 @@
  * Project 4 - OOP Game App
  * Phrase.js */
 
- // create a phrase class to handle the creation of phrases
+ /**
+  * Phraes class handles the creation of phrases
+  * receives a phrase on instantiation
+  */
 class Phrase {
   constructor(phrase) {
     this.phrase = phrase.toLowerCase();
   }
 
+  /**
+   * method to add the phrase property in the phrase object to the DOM
+   */
   addPhraseToDisplay() {
-    
-    const phraseArray = [...this.phrase];
+    // turn the phrase string into an array of each letter and space
+    const phraseArray = [...this.phrase]; 
+    // variable to hold the css class that will be assigned to letters and spaces
     let cls = '';
+    // create an li for each letter and space in the phrase
     phraseArray.forEach(function(char) {
-      // create an li for each letter and space in the phrase
       const li = document.createElement('li');
       if (char === ' ') {
         cls = ['space'];
@@ -22,14 +29,21 @@ class Phrase {
       }
       li.textContent = char;
       li.classList.add(...cls);
+      // add the li to the phrase ul
       phraseUL.appendChild(li);
     });
   }
-
+  /**
+   * method to check if a given letter is in the object's phrase property
+   * @param {string} letter letter to check
+   */
   checkLetter(letter) {
     return this.phrase.includes(letter);
   }
-
+  /**
+   * method to reveal the matched letter on the board
+   * @param {string} letter letter in the phrase property to show
+   */
   showMatchedLetter(letter) {
     const letterElements = document.getElementsByClassName(letter);
     for (let i = 0; i < letterElements.length; i++) {
@@ -38,13 +52,3 @@ class Phrase {
     }
   }
 }
- /** 
-Create the Phrase class in the Phrase.js file.
-
-    The class should also have these methods:
-        
-        checkLetter(): checks to see if the letter selected by the player matches a letter in the phrase.
-        
-        showMatchedLetter(): reveals the letter(s) on the board that matches the player's selection. To reveal the matching letter(s), select all of the letter DOM elements that have a CSS class name that matches the selected letter and replace each selected element's hide CSS class with the show CSS class.
-
- */
