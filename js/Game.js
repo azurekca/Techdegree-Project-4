@@ -20,56 +20,89 @@ class Game {
 			'These blast points are too accurate for sand people',
 			'Red leader standing by'
 		];
-    this.activePhrase = null;
-    this.usedPhrases = 0;
+		this.activePhrase = null;
+		this.alphabet = 'abcdefghijklmnopqrstuvwxyz';
 	}
 
 	startGame() {
-		// hide the overlay which will also prevent the button from being used
-    overlay.style.display = 'none';
-    // set the active phrase to a random phrase
-    this.activePhrase = new Phrase(this.getRandomPhrase());
-    // 
-    this.activePhrase.addPhraseToDisplay();
+		// hide the overlay which will also prevent the start button from being used
+		overlay.style.display = 'none';
+		// set the active phrase to a new Phrase object containing one of the phrases
+		this.activePhrase = new Phrase(this.getRandomPhrase());
+		// show the phrase with letters hidden
+		this.activePhrase.addPhraseToDisplay();
 	}
 
 	getRandomPhrase() {
 		// retrieve random phrase from phrases array
-    const randomNum = Math.floor(Math.random() * this.phrases.length);
-    const randomPhrase = this.phrases[randomNum]
-    // remove random phrase from phrases and increment usedPhrases counter
-    this.phrases.splice(randomNum, 1)
-    this.usedPhrases++
-    return randomPhrase;
+		const randomNum = Math.floor(Math.random() * this.phrases.length);
+		const randomPhrase = this.phrases[randomNum];
+		// remove random phrase from phrases and increment usedPhrases counter
+		this.phrases.splice(randomNum, 1);
+		this.usedPhrases++;
+		return randomPhrase;
 	}
 
 	handleInteraction(event) {
-		// capture letter user selected
 		let guessedLetter;
+		let cls;
+		
+		// capture letter user selected
 		if (event.type === 'click') {
+			// check if the clicked target was a key button, bail if not
+			if (!event.target.matches('.key')) return;
 			guessedLetter = event.target.textContent;
 		} else if (event.type === 'keyup') {
+			// check if letter wasn't already guessed, bail if it was
+			if (!this.alphabet.includes(guessedLetter)) return;
 			guessedLetter = event.key;
 		}
-		console.log(guessedLetter);
+
+		// check if guess is in the phrase
+		if (this.activePhrase.checkLetter(guessedLetter)) {
+			// letter is in phrase: show letter
+			this.activePhrase.showMatchedLetter(guessedLetter);
+			// indicate on onscreen keyboard the correct letter was chosen
+			cls = 'chosen';
+			if (this.checkForWin()) this.gameOver('win');
+		} else {
+			cls = 'wrong';
+			this.removeLife();
+		}
+
+		// find button element corresponding to letter
+		for (const btn of document.querySelectorAll('.key')) {
+			if (btn.textContent.includes(guessedLetter)) {
+				// change button style
+				btn.classList.add(cls);
+				// disable guessed button
+				btn.disabled = true;
+				// remove letter from alphabet of available letters
+				this.alphabet = this.alphabet.replace(guessedLetter, '');
+			}
+		}
+	}
+
+	removeLife() {
+		// change onscreen heart to lost
+		const heart = document.getElementsByTagName('img')[this.missed];
+		heart.src="images/lostHeart.png";
+		// increment the missed counter
+		this.missed++
+		console.log(`you lost ${this.missed} hearts`);
+		if (this.missed >= 5) {
+			this.gameOver('lose')
+		}
+	}
+
+	checkForWin() {
+		return document.getElementsByClassName('hide').length === 0;
+	}
+
+	gameOver(outcome) {
+		let cls;
+		outcome === 'win' ?	cls = 'win' : cls = 'lose';
+		overlay.classList = cls;
+		overlay.style.display = '';
 	}
 }
-
-/*
-Create the Game class in the Game.js file.
-
-    The class should also have these methods:
-    startGame(): hides the start screen overlay, calls the getRandomPhrase() method, and sets the activePhrase property with the chosen phrase. It also adds that phrase to the board by calling the addPhraseToDisplay() method on the active Phrase object.
-
-    handleInteraction(): this method controls most of the game logic. It checks to see if the button clicked by the player matches a letter in the phrase, and then directs the game based on a correct or incorrect guess. This method should:
-        Disable the selected letter’s onscreen keyboard button.
-        If the phrase does not include the guessed letter, add the wrong CSS class to the selected letter's keyboard button and call the removeLife() method.
-        If the phrase includes the guessed letter, add the chosen CSS class to the selected letter's keyboard button, call the showMatchedLetter() method on the phrase, and then call the checkForWin() method. If the player has won the game, also call the gameOver() method.
-
-  removeLife(): this method removes a life from the scoreboard, by replacing one of the liveHeart.png images with a lostHeart.png image (found in the images folder) and increments the missed property. If the player has five missed guesses (i.e they're out of lives), then end the game by calling the gameOver() method.
-
-  checkForWin(): this method checks to see if the player has revealed all of the letters in the active phrase.
-
-  gameOver(): this method displays the original start screen overlay, and depending on the outcome of the game, updates the overlay h1 element with a friendly win or loss message, and replaces the overlay’s start CSS class with either the win or lose CSS class.
- 
-  */
