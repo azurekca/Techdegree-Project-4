@@ -3,7 +3,7 @@
  * Phrase.js */
 
  /**
-  * Phraes class handles the creation of phrases
+  * Phrase class handles the creation of phrases
   * receives a phrase on instantiation
   */
 class Phrase {
