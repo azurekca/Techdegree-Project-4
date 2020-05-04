@@ -49,8 +49,6 @@ class Game {
 		
 		// capture letter user selected
 		if (event.type === 'click') {
-			// check if the clicked target was a key button, bail if not
-			if (!event.target.matches('.key')) return;
 			guessedLetter = event.target.textContent;
 		} else if (event.type === 'keyup') {
 			// check if letter wasn't already guessed, bail if it was
@@ -100,9 +98,20 @@ class Game {
 	}
 
 	gameOver(outcome) {
+		// set win or lose class and game over message depending on outcome
 		let cls;
-		outcome === 'win' ?	cls = 'win' : cls = 'lose';
+		let message;
+		if (outcome === 'win') {
+			cls = 'win';
+			message = 'Woo hoo!! You Win!!'
+		} else if (outcome === 'lose') {
+			cls = 'lose';
+			message = 'Boo hoo!! You lose :('
+		}
 		overlay.classList = cls;
+		// set game over message
+		document.getElementById('game-over-message').innerText = message;
+		// show the win/lose overlay
 		overlay.style.display = '';
 	}
 }

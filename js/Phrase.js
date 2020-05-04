@@ -9,7 +9,7 @@ class Phrase {
   }
 
   addPhraseToDisplay() {
-    const ul = document.querySelector('#phrase ul');
+    
     const phraseArray = [...this.phrase];
     let cls = '';
     phraseArray.forEach(function(char) {
@@ -22,7 +22,7 @@ class Phrase {
       }
       li.textContent = char;
       li.classList.add(...cls);
-      ul.appendChild(li);
+      phraseUL.appendChild(li);
     });
   }
 
