@@ -17,10 +17,11 @@ class Game {
 		this.missed = 0;
 		this.phrases = [
 			'Stay on target',
-			'Then Ill see you in hell',
+			'Then I will see you in hell',
 			'I find your lack of faith disturbing',
 			'These blast points are too accurate for sand people',
-			'Red leader standing by'
+			'Red leader standing by',
+			'these are not the droids you are looking for'
 		];
 		this.activePhrase = null;
 		this.alphabet = 'abcdefghijklmnopqrstuvwxyz';
