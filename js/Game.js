@@ -15,13 +15,13 @@
 class Game {
 	constructor() {
 		this.missed = 0;
-		this.phrases = [
-			'Stay on target',
-			'Then I will see you in hell',
-			'I find your lack of faith disturbing',
-			'These blast points are too accurate for sand people',
-			'Red leader standing by',
-			'these are not the droids you are looking for'
+		this.phrases = [ // change to array of Phrase objects
+			new Phrase('Stay on target'),
+			new Phrase('Then I will see you in hell'),
+			new Phrase('I find your lack of faith disturbing'),
+			new Phrase('These blast points are too accurate for sand people'),
+			new Phrase('Red leader standing by'),
+			new Phrase('these are not the droids you are looking for')
 		];
 		this.activePhrase = null;
 		this.alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -33,7 +33,7 @@ class Game {
 		// hide the overlay which will also prevent the start button from being used
 		overlay.style.display = 'none';
 		// set the active phrase to a new Phrase object containing one of the phrases
-		this.activePhrase = new Phrase(this.getRandomPhrase());
+		this.activePhrase = this.getRandomPhrase();
 		// show the phrase with letters hidden
 		this.activePhrase.addPhraseToDisplay();
 	}
@@ -44,9 +44,6 @@ class Game {
 		// retrieve random phrase from phrases array
 		const randomNum = Math.floor(Math.random() * this.phrases.length);
 		const randomPhrase = this.phrases[randomNum];
-		// remove random phrase from phrases and increment usedPhrases counter
-		this.phrases.splice(randomNum, 1);
-		this.usedPhrases++;
 		return randomPhrase;
 	}
 	/**
