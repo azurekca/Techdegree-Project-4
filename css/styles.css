@@ -47,6 +47,7 @@ h2 {
 
 h1 {
 	font-size: 30px;
+	width: 800px;
 }
 
 button {
@@ -159,6 +160,7 @@ button {
 	position: fixed;
 	color: #fff;
 	justify-content: center;
+	align-items: center;
 	top: 0;
 	bottom: 0;
 	left: 0;

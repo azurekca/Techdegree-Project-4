@@ -118,10 +118,10 @@ class Game {
 		let message;
 		if (outcome === 'win') {
 			cls = 'win';
-			message = 'Woo hoo!! You Win!!'
+			message = 'The force is strong with this one.'
 		} else if (outcome === 'lose') {
 			cls = 'lose';
-			message = 'Boo hoo!! You lose :('
+			message = 'Oh no, my young Jedi. You will find that it is you who are mistaken…about a great many things.'
 		}
 		overlay.classList = cls;
 
