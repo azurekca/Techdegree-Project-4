@@ -4,7 +4,7 @@
 /* Variables */
 
 :root {
-	--color-start: #00ad7c;
+	--color-start: rgb(0, 173, 124);
 	--color-win: #52d681;
 	--color-win-light: #b5ff7d;
 	--color-lose: #c81912;
@@ -177,22 +177,37 @@ button {
 .start a {
 	color: #fff;
 }
-
+/* rebelAlliance.png from nicepng.com and is free to use for personal non-commercial purposes */
 .win {
 	background-color: var(--color-win);
+	background-image: url('../images/rebelAlliance.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 60vh;
 	animation: fadeIn 1.5s;
 }
 
 .win a {
 	color: var(--color-win);
 }
-
+/* deathstar.png from Treehouse course */
 .lose {
 	background-color: var(--color-lose-light);
+	background-image: url('../images/deathstar.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 60vh;
 	animation: wobble 1s;
-
+	color: var(--color-neutral-dark)
 }
 
-.lose a {
+#overlay.lose h1,
+#overlay.lose h2,
+#overlay.lose button {
 	color: var(--color-lose);
+}
+
+#overlay.lose button {
+	background: transparent;
+	border: solid 1px var(--color-lose);
 }
