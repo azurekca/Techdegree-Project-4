@@ -10,7 +10,7 @@
 // checking for a win
 // removing life from the scoreboard
 /**
- * Game class to
+ * Game class
  */
 class Game {
 	constructor() {
